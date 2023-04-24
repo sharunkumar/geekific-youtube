@@ -24,6 +24,8 @@
 
 package com.youtube.geekific;
 
+import java.util.Arrays;
+
 public record DualPivotQuickSort<T extends Comparable<T>>(T[] arr) {
 
     public record Pivot(int left, int right) {
@@ -37,14 +39,17 @@ public record DualPivotQuickSort<T extends Comparable<T>>(T[] arr) {
         if (low >= high) {
             return;
         }
+        System.out.println("Partition between " + low + " and " + high);
         Pivot pivot = partition(low, high);
+        System.out.println(pivot);
         dualPivotQuicksort(low, pivot.left() - 1);
         dualPivotQuicksort(pivot.left() + 1, pivot.right() - 1);
         dualPivotQuicksort(pivot.right() + 1, high);
     }
 
     private Pivot partition(int low, int high) {
-        if (arr[low].compareTo(arr[high]) > 0) swap(low, high);
+        if (arr[low].compareTo(arr[high]) > 0)
+            swap(low, high);
 
         int leftPivotIndex = low + 1;
         int rightPivotIndex = high - 1;
@@ -67,11 +72,13 @@ public record DualPivotQuickSort<T extends Comparable<T>>(T[] arr) {
     }
 
     private void swap(int firstIndex, int secondIndex) {
+        System.out.print("Swap " + firstIndex + " with " + secondIndex + " in " + Arrays.toString(arr));
         if (firstIndex != secondIndex) {
             T temp = arr[firstIndex];
             arr[firstIndex] = arr[secondIndex];
             arr[secondIndex] = temp;
         }
+        System.out.println(" -> " + Arrays.toString(arr));
     }
 
 }
